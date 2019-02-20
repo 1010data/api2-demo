@@ -1,21 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+
+    <h1>Buyer Segmentation Tool</h1>
+    <nav>
+      <ul>
+        <li style="display:block" v-for="s in sections">
+          <router-link :to="s" :class="sectionClass(s)">{{s | capitalize}}</router-link>
+        </li>
+      </ul>
+    </nav>
+
   </div>
 </template>
 
@@ -24,37 +18,40 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Hello, world.',
+      currentTab: 'segmentation',
+      // TODO: calculate from this.$router.options.routes
+      sections: ['segmentation','what','when','where','who','review','debug']
     }
-  }
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
+  methods: {
+    sectionClass(section) { return section === this.$route.path.slice(1) ? 'active' :  '' },
+  },
+  beforeMount() {
+    let self = this;
+    window.addEventListener('popstate', () => {
+      self.currentTab = window.location.hash.slice(1)
+    })
+  },
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-h1, h2 {
-  font-weight: normal;
-}
+html, body, #app { height: 100% }
+html, body, div, nav, ul, li, h1  { margin: 0; padding: 0 }
+h1 { background: silver; color: black; padding: 5px; height: 40px; } /** 40+5+5 = 50px **/
+nav { background: #1d4f8b; width: 150px; height: calc(100% - (50px + 20px)); padding-top: 20px; }
+nav a { display: block; padding: 10px; margin-bottom: 20px; width: 75%;
+  color: black; background: #ccc; text-decoration: none; }
+nav a.active { width: 100%; background: white; }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
