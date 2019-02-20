@@ -9,7 +9,14 @@ let app = new Vue({
   render: h => h(App),
   router: new VueRouter({
     base: '/',
-    routes: []
+    routes: [
+      {path: 'segmentation'},
+      {path: 'what'},
+      {path: 'when'},
+      {path: 'where'},
+      {path: 'who'},
+      {path: 'review'},
+      {path: 'debug'} ]
   })
 })
 
