@@ -10,6 +10,10 @@
       </ul>
     </nav>
 
+    <main>
+      <router-view></router-view>
+    </main>
+
   </div>
 </template>
 
@@ -20,7 +24,7 @@ export default {
     return {
       msg: 'Hello, world.',
       currentTab: 'segmentation',
-      sections: this.$router.options.routes.map(x=>x.path)
+      sections: this.$router.options.routes.map(x=>x.path.slice(1))
     }
   },
   filters: {
@@ -45,19 +49,26 @@ export default {
 html, body, #app { height: 100%; font-family: Calibri, Helvetica, sans-serif; }
 html, body, div, nav, ul, li, h1  { margin: 0; padding: 0 }
 
+$h1-height: 50px; /** 40+5+5 = 50px **/
+h1 { background: #333; color: #eee; padding: 5px; height: 40px; }
 
-h1 { background: #333; color: #eee; padding: 5px; height: 40px; } /** 40+5+5 = 50px **/
-
-h1, nav, nav a { box-shadow: 2px 2px 5px #0006; }
+h1, nav, nav a { box-shadow: 2px 2px 2px #0005; }
 
 /** left side navigation **/
-nav { background: #1d4f8b; width: 150px; height: calc(100% - (50px + 20px)); padding-top: 20px; }
-nav a { display: block; padding: 10px; margin-bottom: 20px; width: 75%;
+$nav-width: 150px; $nav-pad:10px;
+$nav-height: calc(100% - (#{$h1-height} + 20px));
+nav { background: #1d4f8b; width: $nav-width;
+      height: $nav-height; ; padding-top: 20px; }
+nav a { display: block; padding: $nav-pad; margin-bottom: 20px; width: 75%;
   transition: width 333ms ease, background-color 333ms ease-out;
   color: black; background: #e1e9ff; text-decoration: none; }
 nav .router-link-active {
   transition: width 333ms ease, background-color 333ms ease-out;
-  width: 100%; background: white; }
+  width: calc(100% - #{$nav-pad}); background: white; }
 
+/** main content **/
+main { margin-left: 20px; margin-right: 20px;
+  position: absolute; top: $h1-height; left: $nav-width + 2 * $nav-pad;
+  height: $nav-height; width: calc(100% - #{$nav-width + 2 * ($nav-pad + 20px) }); }
 
 </style>
