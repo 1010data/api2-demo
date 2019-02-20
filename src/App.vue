@@ -68,7 +68,11 @@ nav .router-link-active {
 
 /** main content **/
 main { margin-left: 20px; margin-right: 20px;
-  position: absolute; top: $h1-height; left: $nav-width + 2 * $nav-pad;
+  position: absolute; top: $h1-height; left: $nav-width + $nav-pad;
   height: $nav-height; width: calc(100% - #{$nav-width + 2 * ($nav-pad + 20px) }); }
+
+
+/** h2 is used for tab name headers at the top  **/
+h2 { background:#ddd; color: #777; padding: 5px; }
 
 </style>
